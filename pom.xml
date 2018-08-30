@@ -17,6 +17,13 @@
 		<version>2.0.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+	<repositories>
+		<repository>
+			<id>Jabylon</id>
+			<name>Jabylon repository</name>
+			<url>	http://www.jabylon.org/maven/</url>
+		</repository>
+	</repositories>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -64,13 +71,19 @@
 		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.projectreactor</groupId>
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.slf4j/log4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
