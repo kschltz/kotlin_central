@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 import java.util.*
 
-@Document
+@Document(collection = "someStuff")
 data class SomeStuff(
         @Id
         val id: String = UUID.randomUUID().toString(),

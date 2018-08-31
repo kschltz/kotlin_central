@@ -5,7 +5,6 @@ import com.kotlin.test.central.gateway.mongo.MongoSomeStuffRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
-import java.util.function.Function
 
 @Service
 class ListSomeStuff(val someStuffRepository: MongoSomeStuffRepository){
@@ -15,7 +14,8 @@ class ListSomeStuff(val someStuffRepository: MongoSomeStuffRepository){
         log.info("Listing all stuff")
         return someStuffRepository
                 .findAll()
-                .onErrorMap(Function.identity())
+                .doOnError { error->throw error }
+                .doOnSubscribe({subscription ->  log.info("listing started: {}", subscription)})
                 .doOnComplete { log.info("done Listing") }
     }
 }
