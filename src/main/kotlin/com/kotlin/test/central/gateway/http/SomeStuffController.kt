@@ -7,8 +7,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
-import reactor.core.publisher.Mono
-import java.time.LocalDateTime
+import reactor.core.publisher.Flux
 
 @RestController("/SomeStuff")
 class SomeStuffController(
@@ -18,19 +17,14 @@ class SomeStuffController(
     private val log = LoggerFactory.getLogger(SaveSomeStuff::class.java)
 
     @GetMapping
-    fun getStuffs(): Mono<List<SomeStuff>> {
+    fun getStuffs(): Flux<SomeStuff> {
         return listSomeStuff.execute()
-                .buffer()
-                .doFinally({signalType -> log.info("Signal is {}", signalType) })
-                .doOnNext({mutableList -> mutableList.forEach({stuff->log.info("Stuff found: {}",stuff)}) })
-                .doOnError({error->throw error})
-                .next()
-
+                .doOnNext({someStuff -> log.info("stuff found {}",someStuff) })
 
     }
 
     @PostMapping
     fun saveStuff(){
-        saveSomeStuff.execute(SomeStuff(description = "This is some coisa",bornDate = LocalDateTime.MAX))
+        saveSomeStuff.execute(SomeStuff(description = "This is some coisa"))
     }
 }
